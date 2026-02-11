@@ -3,12 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Page</title>
 </head>
 <body>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Operation-UR</title>
+    <style>
+        :root{
+            --milk:#fffdf9;
+            --mocha:#6b4f39;
+            --rose:#ff6b9f;
+            --muted:#bdb9b6;
+            --card-bg: rgba(255,255,255,0.9);
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+            background:linear-gradient(180deg,var(--milk), #f7e7d9 40%, #f3e0d6 60%);
+            color:#222;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+        }
 
-    <h1>Hello World!</h1>
-    <p>Welcome to my website.</p>
+        /* Views */
+        .view{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .4s ease;}
+        .hidden{opacity:0;pointer-events:none}
 
+        /* Lackluster password card */
+        .login-card{
+            width:320px;padding:28px;border-radius:8px;background:#f0f0f0;border:1px solid #d6d6d6;color:#555;text-align:center;box-shadow:none;
+        }
+        .login-card h1{font-size:18px;margin:0 0 14px}
+        .login-card input{width:100%;padding:10px;border-radius:4px;border:1px solid #ccc;background:#eee}
+        .login-card button{margin-top:12px;padding:10px 14px;border-radius:6px;border:none;background:#bfbfbf;color:white;cursor:pointer}
+        .shake{animation:shake .3s ease}
+        @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+
+        /* Themed scene */
+        .scene{width:100%;height:100%;position:relative;overflow:hidden}
+        .bg-gradient{position:absolute;inset:0;background:linear-gradient(120deg,#fff3f6 0%, #fffaf0 50%, #f2e6df 100%)}
+
+        /* Flowers */
+        <!doctype html>
+        <html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width,initial-scale=1" />
+            <style>
+                :root{--milk:#fffdf9;--mocha:#6b4f39;--rose:#ff6b9f;--muted:#bdb9b6;--card-bg: rgba(255,255,255,0.95)}
+                *{box-sizing:border-box}
+                html,body{height:100%}
+                body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;background:linear-gradient(180deg,var(--milk), #f7e7d9 40%, #f3e0d6 60%);color:#222;display:flex;align-items:center;justify-content:center;overflow:hidden}
+
+                .view{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .35s ease}
+                .hidden{opacity:0;pointer-events:none}
+
+                /* Login */
+                .login-card{width:320px;padding:28px;border-radius:10px;background:#f6f6f6;border:1px solid #e1e1e1;color:#555;text-align:center}
+                .login-card h1{font-size:18px;margin:0 0 12px}
+                .login-card input{width:100%;padding:10px;border-radius:8px;border:1px solid #ddd;background:#fafafa}
+                .login-card button{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:#bfbfbf;color:white;cursor:pointer}
+                .shake{animation:shake .32s ease}
+                @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+
+                /* Main themed layout */
+                .scene{position:relative;width:100%;height:100%;overflow:hidden}
+                .bg-gradient{position:absolute;inset:0;background:linear-gradient(120deg,#fff3f6 0%, #fffaf0 50%, #f2e6df 100%)}
+                /* flowers container sits behind content */
+                #flowers{position:absolute;inset:0;pointer-events:none}
+
+                     /* center layout: prompt absolutely centered; images placed left/right of center */
+                     .center-row{position:relative;z-index:6;width:100%;height:100%}
+                     /* prompt is 50% larger: min-width and padding increased, font-size scaled */
+                     .prompt-card{min-width:540px;padding:42px;border-radius:16px;background:var(--card-bg);box-shadow:0 12px 34px rgba(90,70,55,0.12);text-align:center;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+                     .prompt-card h2{font-size:33px}
+                     /* make both sitting images larger so Mocha on the left matches Milk on the right */
+                     .sitting{width:200px;height:auto;filter:drop-shadow(0 8px 18px rgba(50,35,20,0.12));position:absolute;top:50%;transform:translateY(-50%)}
+                     /* positions calculated from prompt half-width (270px) + gap (24px) + image width (200px)
+                         left image left: 50% - (270+24+200) = 50% - 494px
+                         right image left: 50% + (270+24) = 50% + 294px
+                     */
+                     #leftSitting{left:calc(50% - 494px)}
+                     #rightSitting{left:calc(50% + 294px)}
+
+                     /* Responsive fallback: stack vertically on narrow screens */
+                     @media (max-width:900px){
+                        .prompt-card{position:static;transform:none;margin:0 auto}
+                        .center-row{display:flex;flex-direction:column;align-items:center;gap:18px}
+                        .sitting{position:static;transform:none;width:140px}
+                     }
+                .prompt-card h2{margin:0;font-size:22px}
+                .prompt-card .actions{margin-top:16px}
+                .btn{display:inline-block;padding:10px 18px;border-radius:999px;border:none;margin:6px;background:var(--mocha);color:white;cursor:pointer;transition:transform .26s cubic-bezier(.2,.9,.2,1);transform-origin:center}
+                .btn.ghost{background:transparent;border:1px solid rgba(107,79,57,0.12);color:var(--mocha)}
+
+                /* result */
+                .result-card{padding:22px;border-radius:12px;background:var(--card-bg);text-align:center;box-shadow:0 10px 30px rgba(80,60,45,0.08)}
+                #resultImg{max-width:320px;width:80%;height:auto;display:block;margin:8px auto}
+
+                /* flower types and animations */
+                .flower{position:absolute;opacity:0;transform:scale(0);will-change:transform,opacity}
+                .flower.type1{width:42px;height:42px}
+                .flower.type2{width:36px;height:36px}
+                .flower.type3{width:48px;height:48px}
+
+                .bloom1{animation:grow .9s cubic-bezier(.2,.9,.3,1) forwards}
+                .bloom2{animation:pop .7s cubic-bezier(.2,.9,.3,1) forwards}
+                .bloom3{animation:rise .95s cubic-bezier(.2,.9,.3,1) forwards}
+
+                @keyframes grow{0%{transform:scale(0);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1);opacity:1}}
+                @keyframes pop{0%{transform:scale(.2) rotate(-10deg);opacity:0}60%{transform:scale(1.12) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0)} }
+                @keyframes rise{0%{transform:translateY(8px) scale(.4);opacity:0}60%{transform:translateY(-6px) scale(1.06);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+
+                /* small subtle float for some flowers */
+                .float{animation:floaty 4s ease-in-out infinite}
+                @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+            </style>
+        </head>
+        <body>
+
+            <!-- Login view -->
+            <div id="login" class="view">
+                <div class="login-card" id="loginCard">
+                    <h1>Enter password</h1>
+                    <input id="pwd" type="password" placeholder="password" autocomplete="off" />
+                    <button id="unlock">Unlock</button>
+                    <div style="margin-top:8px;color:var(--muted);font-size:13px">(it looks... uninspired)</div>
+                </div>
+            </div>
+
+            <!-- Themed prompt view -->
+            <div id="main" class="view hidden">
+                <div class="scene">
+                    <div class="bg-gradient"></div>
+                    <div id="flowers"></div>
+
+                    <div class="center-row">
+                        <img id="leftSitting" class="sitting" src="mochaSitting.png" alt="Mocha sitting" />
+
+                        <div class="prompt-card" id="promptCard">
+                            <h2>Will you be my valentine?</h2>
+                            <div class="actions">
+                                <button class="btn" id="yesBtn">Yes</button>
+                                <button class="btn ghost" id="noBtn">No</button>
+                            </div>
+                            <div id="hint" style="margin-top:10px;color:var(--muted);font-size:14px;min-height:20px"></div>
+                        </div>
+
+                        <img id="rightSitting" class="sitting" src="milkSitting.png" alt="Milk sitting" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result view -->
+            <div id="result" class="view hidden">
+                <div class="result-card">
+                    <div id="resultMessage" style="font-size:20px;font-weight:700;margin-bottom:6px"></div>
+                    <img id="resultImg" src="" alt="result" />
+                    <div style="margin-top:10px"><button class="btn" id="backBtn">Back</button></div>
+                </div>
+            </div>
+
+            <script>
+                const SECRET = 'bearzrule';
+
+                const login = document.getElementById('login');
+                const main = document.getElementById('main');
+                const result = document.getElementById('result');
+                const unlock = document.getElementById('unlock');
+                const pwd = document.getElementById('pwd');
+                const loginCard = document.getElementById('loginCard');
+
+                const yesBtn = document.getElementById('yesBtn');
+                const noBtn = document.getElementById('noBtn');
+                const flowersWrap = document.getElementById('flowers');
+                const resultMessage = document.getElementById('resultMessage');
+                const resultImg = document.getElementById('resultImg');
+                const backBtn = document.getElementById('backBtn');
+                const hint = document.getElementById('hint');
+
+                // No-button misclick flow
+                let noClickCount = 0;
+                const noHints = ["<strong>I think you misclicked?</strong>", "<strong>Really, are you sure?</strong>"];
+
+                function show(view){[login,main,result].forEach(v=>v.classList.add('hidden')); view.classList.remove('hidden')}
+
+                unlock.addEventListener('click', tryUnlock);
+                pwd.addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock() });
+
+                function tryUnlock(){
+                    if(pwd.value.trim().toLowerCase()===SECRET){ show(main); startFlowers(); } else { loginCard.classList.remove('shake'); void loginCard.offsetWidth; loginCard.classList.add('shake'); }
+                }
+
+                // create many flowers of different types with staggered animations
+                function startFlowers(){
+                    flowersWrap.innerHTML='';
+                    const total = 28;
+                    for(let i=0;i<total;i++){
+                        const el = document.createElement('div');
+                        // decide whether this is a heart or a flower (about 35% hearts)
+                        const isHeart = Math.random() < 0.35;
+                        const t = Math.floor(Math.random()*3); // choose bloom animation variant
+                        el.className = 'flower ' + (t===0? 'type1':'') + (t===1? ' type2':'') + (t===2? ' type3':'');
+                        // position
+                        const left = Math.random()*100;
+                        const top = Math.random()*80 + 5;
+                        el.style.left = left + '%'; el.style.top = top + '%';
+                        // random sizing for variety
+                        const scale = 0.6 + Math.random()*1.2;
+                        const base = (t===2?48: (t===0?40:36));
+                        el.style.width = (base * scale) + 'px';
+                        el.style.height = el.style.width;
+                        // random delay
+                        const delay = Math.random()*1600;
+                        el.style.animationDelay = delay + 'ms';
+                        // some float
+                        if(Math.random()>0.7) el.classList.add('float');
+
+                        if(isHeart){
+                            // heart SVG centered inside box
+                            el.innerHTML = '<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">'
+                                         + '<path d="M16 28s-12-7.4-12-13.6C4 9.3 8.6 6 12 6c2.1 0 3.8 1.2 4 2.1C16.2 7.2 17.9 6 20 6c3.4 0 8 3.3 8 8.4C28 20.6 16 28 16 28z" fill="#ff6b9f"/>'
+                                         + '</svg>';
+                        } else {
+                            // flower variants (petal-based)
+                            if(t===0){
+                                el.innerHTML = '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">'
+                                             + '<g>'
+                                             + '<g transform="translate(24,24)">'
+                                             + '<ellipse rx="6" ry="12" fill="#ff9ac1" transform="rotate(0)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ff9ac1" transform="rotate(72)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ff9ac1" transform="rotate(144)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ff9ac1" transform="rotate(216)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ff9ac1" transform="rotate(288)"/>'
+                                             + '</g>'
+                                             + '<circle cx="24" cy="24" r="5" fill="#ffd86b"/>'
+                                             + '</g></svg>';
+                            } else if(t===1){
+                                // rounded petal flower (no teardrop shapes)
+                                el.innerHTML = '<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">'
+                                             + '<g transform="translate(24,24)">'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(0)"/>'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(60)"/>'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(120)"/>'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(180)"/>'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(240)"/>'
+                                             + '<ellipse rx="5" ry="10" fill="#ff9ac1" transform="rotate(300)"/>'
+                                             + '<circle cx="0" cy="0" r="5" fill="#ffd86b"/>'
+                                             + '</g></svg>';
+                            } else {
+                                el.innerHTML = '<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">'
+                                             + '<g transform="translate(30,30)">'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(0)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(45)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(90)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(135)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(180)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(225)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(270)"/>'
+                                             + '<ellipse rx="6" ry="12" fill="#ffb0c2" transform="rotate(315)"/>'
+                                             + '<circle cx="0" cy="0" r="6" fill="#ffd86b"/>'
+                                             + '</g></svg>';
+                            }
+                        }
+
+                        flowersWrap.appendChild(el);
+                        // trigger bloom after delay, using chosen animation variant
+                        setTimeout(()=>{ el.style.opacity='1'; el.style.transform='scale(1)'; el.classList.add(t===0? 'bloom1': t===1? 'bloom2':'bloom3'); }, delay+80);
+                    }
+                }
+
+                yesBtn.addEventListener('click', ()=>{ resetNoCounter(); showResult(true); });
+                noBtn.addEventListener('click', handleNoClick);
+                backBtn.addEventListener('click', ()=>{ show(main); startFlowers(); resetNoCounter(); });
+
+                function showResult(ok){
+                    show(result);
+                    if(ok){
+                        resultMessage.textContent = 'Yay!!!';
+                        resultImg.src = 'mochaWithFlowers.png';
+                        resultImg.alt = 'Mocha with flowers';
+                    } else {
+                        resultMessage.textContent = 'Aw...';
+                        resultImg.src = 'sadMocha.png';
+                        resultImg.alt = 'Sad Mocha';
+                    }
+                }
+
+                function handleNoClick(){
+                    noClickCount += 1;
+                    // more dramatic scaling and move the No button with translate
+                    if(noClickCount === 1){
+                        hint.innerHTML = noHints[0];
+                        yesBtn.style.transform = 'translate(0,0) scale(1.45)';
+                        noBtn.style.transform = 'translate(-140px,-10px) scale(0.6)';
+                    } else if(noClickCount === 2){
+                        hint.innerHTML = noHints[1];
+                        yesBtn.style.transform = 'translate(0,0) scale(1.9)';
+                        noBtn.style.transform = 'translate(160px,6px) scale(0.45)';
+                    } else {
+                        // third click -> show sad mocha
+                        resetNoCounter();
+                        showResult(false);
+                    }
+                }
+
+                function resetNoCounter(){
+                    noClickCount = 0;
+                    hint.innerHTML = '';
+                    yesBtn.style.transform = 'translate(0,0) scale(1)';
+                    noBtn.style.transform = 'translate(0,0) scale(1)';
+                }
+
+                // initial focus
+                pwd.focus();
+            </script>
+        </body>
+        </html>
+
+    </script>
 </body>
 </html>
