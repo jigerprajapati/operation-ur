@@ -93,12 +93,26 @@
                      #leftSitting{left:calc(50% - 494px)}
                      #rightSitting{left:calc(50% + 294px)}
 
-                     /* Responsive fallback: stack vertically on narrow screens */
-                     @media (max-width:900px){
-                        .prompt-card{position:static;transform:none;margin:0 auto}
-                        .center-row{display:flex;flex-direction:column;align-items:center;gap:18px}
-                        .sitting{position:static;transform:none;width:140px}
-                     }
+                                /* Responsive fallback: stack vertically on narrow screens */
+                                @media (max-width:900px){
+                                    .prompt-card{position:static;transform:none;margin:0 auto;min-width:70%;padding:22px}
+                                    .center-row{display:flex;flex-direction:column;align-items:center;gap:18px;justify-content:center;min-height:100vh}
+                                    .sitting{position:static;transform:none;width:140px}
+                                }
+                                @media (max-width:700px){
+                                    .prompt-card{min-width:86%;padding:18px;border-radius:12px}
+                                    .prompt-card h2{font-size:20px}
+                                    .sitting{width:120px}
+                                    #resultImg{max-width:260px;width:70%}
+                                }
+                                @media (max-width:420px){
+                                    .prompt-card{min-width:92%;padding:14px}
+                                    .prompt-card h2{font-size:18px}
+                                    .sitting{width:100px}
+                                    #leftSitting,#rightSitting{display:block}
+                                    /* reduce visual clutter of flowers on very small screens */
+                                    .flower{opacity:0.95}
+                                }
                 .prompt-card h2{margin:0;font-size:22px}
                 .prompt-card .actions{margin-top:16px}
                 .btn{display:inline-block;padding:10px 18px;border-radius:999px;border:none;margin:6px;background:var(--mocha);color:white;cursor:pointer;transition:transform .26s cubic-bezier(.2,.9,.2,1);transform-origin:center}
@@ -188,6 +202,7 @@
                 const resultImg = document.getElementById('resultImg');
                 const backBtn = document.getElementById('backBtn');
                 const hint = document.getElementById('hint');
+                const promptCard = document.getElementById('promptCard');
 
                 // No-button misclick flow
                 let noClickCount = 0;
@@ -205,7 +220,12 @@
                 // create many flowers of different types with staggered animations
                 function startFlowers(){
                     flowersWrap.innerHTML='';
-                    const total = 28;
+                    // reduce flower density on smaller screens
+                    const w = window.innerWidth || 1024;
+                    let total = 28;
+                    if(w < 420) total = 10;
+                    else if(w < 700) total = 16;
+                    else if(w < 900) total = 20;
                     for(let i=0;i<total;i++){
                         const el = document.createElement('div');
                         // decide whether this is a heart or a flower (about 35% hearts)
@@ -222,7 +242,7 @@
                         el.style.width = (base * scale) + 'px';
                         el.style.height = el.style.width;
                         // random delay
-                        const delay = Math.random()*1600;
+                        const delay = Math.random()*1200;
                         el.style.animationDelay = delay + 'ms';
                         // some float
                         if(Math.random()>0.7) el.classList.add('float');
@@ -299,15 +319,33 @@
 
                 function handleNoClick(){
                     noClickCount += 1;
-                    // more dramatic scaling and move the No button with translate
+                    const w = window.innerWidth || 1024;
+                    const mobile = w < 700;
+                    // more dramatic scaling and move the No button with translate (smaller on mobile)
                     if(noClickCount === 1){
                         hint.innerHTML = noHints[0];
-                        yesBtn.style.transform = 'translate(0,0) scale(1.45)';
-                        noBtn.style.transform = 'translate(-140px,-10px) scale(0.6)';
+                        if(mobile){
+                            // ensure hint appears above actions so No can move down without overlapping
+                            if(promptCard.firstChild !== hint){ promptCard.insertBefore(hint, promptCard.querySelector('.actions')); }
+                            promptCard.style.paddingBottom = '140px';
+                            yesBtn.style.transform = 'translate(0,0) scale(1.25)';
+                            noBtn.style.transform = 'translate(0,40px) scale(0.72)';
+                            yesBtn.style.zIndex = 2; noBtn.style.zIndex = 1;
+                        } else {
+                            hint.innerHTML = noHints[0];
+                            yesBtn.style.transform = 'translate(0,0) scale(1.45)';
+                            noBtn.style.transform = 'translate(-140px,-10px) scale(0.6)';
+                        }
                     } else if(noClickCount === 2){
                         hint.innerHTML = noHints[1];
-                        yesBtn.style.transform = 'translate(0,0) scale(1.9)';
-                        noBtn.style.transform = 'translate(160px,6px) scale(0.45)';
+                        if(mobile){
+                            yesBtn.style.transform = 'translate(0,0) scale(1.5)';
+                            noBtn.style.transform = 'translate(0,80px) scale(0.55)';
+                            yesBtn.style.zIndex = 2; noBtn.style.zIndex = 1;
+                        } else {
+                            yesBtn.style.transform = 'translate(0,0) scale(1.9)';
+                            noBtn.style.transform = 'translate(160px,6px) scale(0.45)';
+                        }
                     } else {
                         // third click -> show sad mocha
                         resetNoCounter();
@@ -320,6 +358,10 @@
                     hint.innerHTML = '';
                     yesBtn.style.transform = 'translate(0,0) scale(1)';
                     noBtn.style.transform = 'translate(0,0) scale(1)';
+                    yesBtn.style.zIndex = ''; noBtn.style.zIndex = '';
+                    // move hint back below actions (original location)
+                    if(promptCard.querySelector('.actions')){ promptCard.appendChild(hint); }
+                    promptCard.style.paddingBottom = '';
                 }
 
                 // initial focus
